@@ -1,12 +1,16 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from uuid import uuid4
+from os import getcwd
 
 
 app = FastAPI()
 
+app.mount("/js", StaticFiles(directory=f"{getcwd()}/js"), name="js")
+
 def get_index_tempale() -> str:
-    with open("./index.html", "r") as index:
+    with open("./html/index.html", "r") as index:
         return index.read()
 
 def create_index_page(contents: list[str]) -> str:
